@@ -1,0 +1,51 @@
+---
+driver:
+  name: vagrant
+  boot_timeout: 1200
+  gui: <%= @kitchen_gui %>
+  communicator: winrm
+  guest: windows
+
+## The forwarded_port port feature lets you connect to ports on the VM guest via
+## localhost on the host.
+## see also: https://docs.vagrantup.com/v2/networking/forwarded_ports.html
+
+#  network:
+#    - ["forwarded_port", {guest: 80, host: 8080}]
+
+provisioner:
+  name: policyfile_zero
+  http_proxy: "<%= @http_proxy %>"
+  https_proxy: "<%= @https_proxy %>"
+  deprecations_as_errors: <%= @deprecations_errors %>
+
+## require_chef_omnibus specifies a specific chef version to install. You can
+## also set this to `true` to always use the latest version.
+## see also: https://docs.chef.io/config_yml_kitchen.html
+
+#  require_chef_omnibus: 12.8.1
+
+transport:
+  name: winrm
+  elevated: true
+  username: <%= @vagrant_username %>
+  password: <%= @vagrant_password %>
+
+verifier:
+  name: inspec
+
+platforms:
+  - name: <%= @vm_name %>
+    os_type: windows
+    driver:
+      box: <%= @vm_name %>
+      customize:
+        memory: <%= @custom_memory %>
+      vm_hostname: false
+
+suites:
+  - name: default
+    verifier:
+      inspec_tests:
+        - test/integration/default
+    attributes:

@@ -1,0 +1,52 @@
+---
+driver:
+  name: vagrant
+  boot_timeout: 1200
+  gui: <%= @kitchen_gui %>
+  communicator: winrm
+  guest: windows
+
+
+provisioner:
+  name: chef_zero
+  http_proxy: "<%= @http_proxy %>"
+  https_proxy: "<%= @https_proxy %>"
+  deprecations_as_errors: <%= @deprecations_errors %>
+
+transport:
+  name: winrm
+  elevated: true
+  username: <%= @vagrant_username %>
+  password: <%= @vagrant_password %>
+
+
+verifier:
+  name: inspec
+
+platforms:
+  - name: <%= @vm_name %>
+    os_type: windows
+    driver:
+      box: <%= @vm_name %>
+      customize:
+        memory: <%= @custom_memory %>
+      vm_hostname: false
+
+
+suites:
+  - name: default
+    driver:
+      network:
+        - ["private_network", {ip: "<%= @private_ip %>"}]
+      attributes:
+        chef-client:
+          config:
+            http_proxy: "<%= @http_proxy %>"
+            https_proxy: "<%= @https_proxy %>"
+
+    run_list:
+      - recipe[<%= cookbook_name %>::default]
+    verifier:
+      inspec_tests:
+        - test/integration/default
+    attributes:
