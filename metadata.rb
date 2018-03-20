@@ -1,4 +1,4 @@
-name             'win2016gen'
+name             'chef-win-generator'
 description      'Windows Custom code generator cookbook for use with ChefDK'
 long_description 'Windows Custom code generator cookbook for use with ChefDK
                   Build Cookbook is not generated
