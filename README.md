@@ -25,3 +25,7 @@ default['win2016gen']['kitchen']['vm_name'] = 'windows2016min'
 default['win2016gen']['kitchen']['custom_memory'] = '2000'
 default['win2016gen']['kitchen']['private_ip'] = '192.168.1.1'
 ```
+## Usage
+`chef generate cookbook -g .\path\to\chef-win-generator cookbookname`
+
+You can also add the following line to the config.rb/knife.rb `chefdk.generator_cookbook '.\path\to\chef-win-generator'` and call `chef generate cookbook cookbookname`.  The chef generate will default to use chef-win-generator.
