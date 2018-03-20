@@ -17,3 +17,6 @@ long_description 'Windows Custom code generator cookbook for use with ChefDK
                   [win2016gen][kitchen][custom_memory]
                   [win2016gen][kitchen][private_ip]'
 version          '0.1.0'
+supports         'windows'
+issues_url       'https://github.com/omar-irizarry/chef-win-generator/issues' if respond_to?(:issues_url)
+source_url       'https://github.com/omar-irizarry/chef-win-generator' if respond_to?(:source_url)
