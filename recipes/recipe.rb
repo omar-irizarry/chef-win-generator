@@ -9,6 +9,16 @@ spec_path = File.join(spec_dir, "#{context.new_file_basename}_spec.rb")
 inspec_dir = File.join(cookbook_dir, 'test', 'integration', 'default')
 inspec_path = File.join(inspec_dir, "#{context.new_file_basename}_test.rb")
 
+
+if node['win2016gen']['metadata'].attribute?('license') &&
+   context.license == 'all_rights'
+  context.license = node['win2016gen']['metadata']['license']
+end
+if node['win2016gen']['metadata'].attribute?('copyright_holder') &&
+  context.copyright_holder == 'The Authors'
+ context.copyright_holder = node['win2016gen']['metadata']['copyright_holder']
+end
+
 if File.directory?(File.join(cookbook_dir, 'test', 'recipes'))
   Chef::Log.deprecation <<-EOH
 It appears that you have Inspec tests located at "test/recipes". This location can
